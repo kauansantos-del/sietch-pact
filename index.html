@@ -451,8 +451,8 @@
       width: 40px; height: 40px;
       border-radius: var(--radius-sm);
       border: 1.5px solid var(--border-default);
-      background: var(--surface-subtle);
-      color: var(--text-low);
+      background: var(--gray-9);
+      color: #fff;
       font-size: 15px;
       font-weight: 600;
       cursor: pointer;
@@ -944,16 +944,16 @@
       background: rgba(255,255,255,0.035);
     }
 
-    /* Score buttons — clear inactive, vivid active */
+    /* Score buttons — white text in dark mode */
     [data-theme="dark"] .score-btn {
-      background: rgba(255,255,255,0.04);
-      border-color: rgba(100,115,180,0.22);
-      color: var(--gray-10);
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(100,115,180,0.28);
+      color: #fff;
     }
     [data-theme="dark"] .score-btn:hover {
-      background: rgba(255,255,255,0.09);
+      background: rgba(255,255,255,0.18);
       border-color: rgba(100,115,180,0.5);
-      color: var(--gray-12);
+      color: #fff;
       box-shadow: 0 2px 10px rgba(0,0,0,0.25);
     }
     [data-theme="dark"] .score-btn.active.score-5 { box-shadow: 0 3px 16px rgba(17,122,87,0.55); }
