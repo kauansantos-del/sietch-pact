@@ -819,6 +819,365 @@
       .score-btns { flex-wrap: wrap; }
       .results-scores-grid { grid-template-columns: 1fr; }
     }
+
+    /* ══════════════════════════════════════════════════════════════
+       DARK MODE PREMIUM — Blue-charcoal scale + component overrides
+       Replaces flat neutral grays with a refined dark palette that
+       has proper surface hierarchy and depth, like Linear / Vercel.
+    ══════════════════════════════════════════════════════════════ */
+    [data-theme="dark"] {
+      /* Refined gray scale — warm charcoal with subtle blue undertone */
+      --gray-1:  #0c0e13;
+      --gray-2:  #111419;
+      --gray-3:  #181c24;
+      --gray-4:  #1f2330;
+      --gray-5:  #262b3a;
+      --gray-6:  #313649;
+      --gray-7:  #42485e;
+      --gray-8:  #575e78;
+      --gray-9:  #6e7491;
+      --gray-10: #8d94ad;
+      --gray-11: #aeb5cb;
+      --gray-12: #e3e7f2;
+
+      /* Explicit surface overrides — cards must stand out from bg */
+      --surface-app:     #0c0e13;
+      --surface-subtle:  #111419;
+      --surface-card:    #181c24;
+      --surface-overlay: rgba(0, 0, 0, 0.78);
+
+      /* Sidebar — slightly distinct from app background */
+      --surface-sidebar:        #0f1117;
+      --surface-sidebar-hover:  rgba(255,255,255,0.05);
+      --surface-sidebar-active: rgba(255,255,255,0.08);
+
+      /* Borders — blue-tinted for depth */
+      --border-subtle:  rgba(100,115,180,0.14);
+      --border-default: rgba(100,115,180,0.26);
+      --border-strong:  rgba(100,115,180,0.42);
+      --border-focus:   #6b8aff;
+
+      /* Text — slightly cooler white for dark surfaces */
+      --text-high:        #e3e7f2;
+      --text-default:     #cdd3e8;
+      --text-low:         #a0a8c2;
+      --text-muted:       #6a718a;
+      --text-placeholder: #5a6070;
+      --text-disabled:    #3a3f52;
+      --text-on-solid:    #0c0e13;
+
+      /* Interactive states */
+      --surface-interactive:        rgba(255,255,255,0.04);
+      --surface-interactive-hover:  rgba(255,255,255,0.07);
+      --surface-interactive-active: rgba(255,255,255,0.10);
+    }
+
+    /* Sidebar item active — override text-on-solid to show on dark bg */
+    [data-theme="dark"] .sidebar__item--active {
+      background-color: rgba(255,255,255,0.08) !important;
+      color: var(--gray-12) !important;
+    }
+    [data-theme="dark"] .sidebar__item--active::before {
+      background: #4cc38a; /* PACT brand green accent */
+      width: 3px;
+    }
+    [data-theme="dark"] .sidebar__item:hover {
+      background-color: rgba(255,255,255,0.05);
+      color: var(--gray-12);
+    }
+    [data-theme="dark"] .sidebar {
+      border-right-color: rgba(100,115,180,0.12);
+    }
+    [data-theme="dark"] .sidebar-bottom {
+      border-top-color: rgba(100,115,180,0.14);
+    }
+
+    /* Primary button — visible on dark surfaces */
+    [data-theme="dark"] .btn-filled {
+      background-color: var(--gray-12);
+      color: var(--gray-1);
+    }
+    [data-theme="dark"] .btn-filled:hover {
+      background-color: #fff;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    }
+
+    /* Outlined button */
+    [data-theme="dark"] .btn-outlined {
+      border-color: rgba(100,115,180,0.3);
+      color: var(--gray-11);
+    }
+    [data-theme="dark"] .btn-outlined:hover {
+      background-color: rgba(255,255,255,0.05);
+      border-color: rgba(100,115,180,0.5);
+      color: var(--gray-12);
+    }
+
+    /* Stat icon — glass tile in dark */
+    [data-theme="dark"] .stat-icon {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(100,115,180,0.2);
+      color: var(--gray-11);
+    }
+    [data-theme="dark"] .stat-card {
+      background: rgba(255,255,255,0.025);
+      border-color: rgba(100,115,180,0.16);
+    }
+    [data-theme="dark"] .stat-card:hover {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(100,115,180,0.35);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.35);
+    }
+
+    /* Criterion cards — layered depth */
+    [data-theme="dark"] .criterion-card {
+      background: rgba(255,255,255,0.025);
+      border-color: rgba(100,115,180,0.16);
+    }
+    [data-theme="dark"] .criterion-card:hover {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(100,115,180,0.32);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    [data-theme="dark"] .criterion-card.has-score {
+      border-color: rgba(100,115,180,0.28);
+      background: rgba(255,255,255,0.035);
+    }
+
+    /* Score buttons — clear inactive, vivid active */
+    [data-theme="dark"] .score-btn {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(100,115,180,0.22);
+      color: var(--gray-10);
+    }
+    [data-theme="dark"] .score-btn:hover {
+      background: rgba(255,255,255,0.09);
+      border-color: rgba(100,115,180,0.5);
+      color: var(--gray-12);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+    }
+    [data-theme="dark"] .score-btn.active.score-5 { box-shadow: 0 3px 14px rgba(29,158,117,0.5); }
+    [data-theme="dark"] .score-btn.active.score-4 { box-shadow: 0 3px 14px rgba(24,95,165,0.5); }
+    [data-theme="dark"] .score-btn.active.score-3 { box-shadow: 0 3px 14px rgba(133,79,11,0.55); }
+    [data-theme="dark"] .score-btn.active.score-2 { box-shadow: 0 3px 14px rgba(194,91,0,0.5); }
+    [data-theme="dark"] .score-btn.active.score-1 { box-shadow: 0 3px 14px rgba(163,45,45,0.55); }
+
+    /* Progress bar track in dark */
+    [data-theme="dark"] .score-bar-inline {
+      background: rgba(100,115,180,0.15);
+    }
+
+    /* Classification badges — dark-adapted */
+    [data-theme="dark"] .badge-otimo {
+      background-color: rgba(29,158,117,0.16);
+      color: #4cc38a;
+      border-color: rgba(76,195,138,0.3);
+    }
+    [data-theme="dark"] .badge-bom {
+      background-color: rgba(24,95,165,0.2);
+      color: #52a9ff;
+      border-color: rgba(82,169,255,0.3);
+    }
+    [data-theme="dark"] .badge-regular {
+      background-color: rgba(133,79,11,0.22);
+      color: #f1a10d;
+      border-color: rgba(241,161,13,0.3);
+    }
+    [data-theme="dark"] .badge-critico {
+      background-color: rgba(163,45,45,0.22);
+      color: #ff6369;
+      border-color: rgba(255,99,105,0.3);
+    }
+
+    /* Priority badges in dark — need contrast on dark criterion cards */
+    [data-theme="dark"] .priority-alta {
+      background-color: rgba(163,45,45,0.2);
+      color: #ff6369;
+    }
+    [data-theme="dark"] .priority-media {
+      background-color: rgba(133,79,11,0.22);
+      color: #f1a10d;
+    }
+    [data-theme="dark"] .priority-baixa {
+      background-color: rgba(24,95,165,0.2);
+      color: #52a9ff;
+    }
+
+    /* Alert warning */
+    [data-theme="dark"] .alert-warning {
+      background-color: rgba(133,79,11,0.16);
+      border-left-color: #f1a10d;
+      color: #f1a10d;
+    }
+
+    /* Inputs, selects, textareas */
+    [data-theme="dark"] .input,
+    [data-theme="dark"] .textarea,
+    [data-theme="dark"] .select {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(100,115,180,0.24);
+      color: var(--gray-12);
+    }
+    [data-theme="dark"] .input:hover,
+    [data-theme="dark"] .textarea:hover,
+    [data-theme="dark"] .select:hover {
+      border-color: rgba(100,115,180,0.42);
+    }
+    [data-theme="dark"] .input:focus,
+    [data-theme="dark"] .textarea:focus,
+    [data-theme="dark"] .select:focus {
+      border-color: #6b8aff;
+      box-shadow: 0 0 0 3px rgba(107,138,255,0.18);
+    }
+    [data-theme="dark"] .input::placeholder,
+    [data-theme="dark"] .textarea::placeholder {
+      color: var(--text-placeholder);
+    }
+
+    /* Modal — elevated surface + strong shadow */
+    [data-theme="dark"] .modal-box {
+      background: #1f2330;
+      border-color: rgba(100,115,180,0.24);
+      box-shadow: 0 32px 64px rgba(0,0,0,0.65),
+                  0 0 0 1px rgba(100,115,180,0.12);
+    }
+    [data-theme="dark"] .modal-header,
+    [data-theme="dark"] .modal-footer {
+      border-color: rgba(100,115,180,0.16);
+    }
+
+    /* Toast */
+    [data-theme="dark"] .toast {
+      background: #2a2f42;
+      color: var(--gray-12);
+      border: 1px solid rgba(100,115,180,0.25);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+    }
+    [data-theme="dark"] .toast.toast-success { background: #0d3d2a; border-color: rgba(76,195,138,0.3); }
+    [data-theme="dark"] .toast.toast-error   { background: #3a1010; border-color: rgba(255,99,105,0.3); }
+
+    /* History cards */
+    [data-theme="dark"] .history-card {
+      background: rgba(255,255,255,0.025);
+      border-color: rgba(100,115,180,0.16);
+    }
+    [data-theme="dark"] .history-card:hover {
+      background: rgba(255,255,255,0.045);
+      border-color: rgba(100,115,180,0.36);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.38);
+    }
+
+    /* Tabs in dark */
+    [data-theme="dark"] .tabs {
+      border-bottom-color: rgba(100,115,180,0.18);
+    }
+    [data-theme="dark"] .tab--active {
+      border-bottom-color: var(--gray-12);
+      color: var(--gray-12);
+    }
+    [data-theme="dark"] .tab:hover {
+      background-color: rgba(255,255,255,0.05);
+    }
+
+    /* Card generic */
+    [data-theme="dark"] .card {
+      background: rgba(255,255,255,0.025);
+      border-color: rgba(100,115,180,0.16);
+    }
+
+    /* Results score cards */
+    [data-theme="dark"] .results-score-card {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(100,115,180,0.2);
+    }
+    [data-theme="dark"] .results-score-card:hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+    }
+
+    /* Criteria breakdown in results */
+    [data-theme="dark"] .res-criterion-row {
+      border-bottom-color: rgba(100,115,180,0.14);
+    }
+    [data-theme="dark"] .res-block-title {
+      border-bottom-color: rgba(100,115,180,0.18);
+    }
+
+    /* Step footer */
+    [data-theme="dark"] .step-footer {
+      border-top-color: rgba(100,115,180,0.18);
+    }
+    [data-theme="dark"] .btn-next-step {
+      background: rgba(255,255,255,0.07);
+      color: var(--gray-12);
+      border: 1px solid rgba(100,115,180,0.28);
+    }
+    [data-theme="dark"] .btn-next-step:hover {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(100,115,180,0.5);
+    }
+
+    /* Nav badge */
+    [data-theme="dark"] .nav-badge {
+      background: rgba(255,255,255,0.09);
+      color: var(--gray-11);
+      border: 1px solid rgba(100,115,180,0.25);
+    }
+
+    /* Export pre */
+    [data-theme="dark"] .export-pre {
+      background: rgba(255,255,255,0.03);
+      border-color: rgba(100,115,180,0.18);
+    }
+
+    /* Detail criteria rows */
+    [data-theme="dark"] .detail-criteria-row {
+      border-bottom-color: rgba(100,115,180,0.14);
+    }
+
+    /* Empty state */
+    [data-theme="dark"] .empty-state svg { color: var(--gray-8); }
+
+    /* Res criteria bar track */
+    [data-theme="dark"] .res-criterion-bar {
+      background: rgba(100,115,180,0.15);
+    }
+
+    /* ── Light mode component polish (both modes) ── */
+
+    /* Stat icon — refined gradient in light */
+    .stat-icon {
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    }
+
+    /* Card — slightly warmer shadow in light */
+    .card {
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.04);
+    }
+
+    /* Criterion card — slightly warmer in light */
+    .criterion-card {
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .criterion-card.has-score {
+      background: #fafcff;
+    }
+
+    /* Score btn — slightly rounded in both modes */
+    .score-btn {
+      border-radius: 10px;
+    }
+
+    /* Tab indicator — slightly thicker */
+    .tab--active {
+      border-bottom-width: 2px;
+      font-weight: 600;
+      color: var(--text-high);
+    }
+
+    /* Input focus ring — consistent 3px blue in light */
+    .input:focus, .textarea:focus, .select:focus {
+      box-shadow: 0 0 0 3px rgba(0,100,255,0.1);
+    }
   </style>
 </head>
 <body>
