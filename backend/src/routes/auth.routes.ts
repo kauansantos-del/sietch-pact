@@ -112,4 +112,40 @@ router.post('/logout', requireAuth, async (req: Request, res: Response, next: Ne
   }
 });
 
+// ─── 5. Bypass temporário (sem Google OAuth) ────────────────
+// Remove quando o redirect URI do Google Console estiver configurado.
+router.post('/bypass', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const email = (env.INITIAL_ADMIN_EMAIL ?? 'admin@pact.internal').toLowerCase();
+
+    let user = await prisma.user.findFirst({ where: { email } });
+
+    if (!user) {
+      user = await prisma.user.create({
+        data: {
+          googleId: `bypass_${Date.now()}`,
+          email,
+          name: 'Admin PACT',
+          role: 'SUPER_ADMIN',
+          active: true,
+          lastLoginAt: new Date(),
+        },
+      });
+    } else {
+      await prisma.user.update({ where: { id: user.id }, data: { lastLoginAt: new Date() } });
+    }
+
+    if (!user.active) {
+      return res.status(403).json({ error: { code: 'USER_INACTIVE', message: 'Conta desativada' } });
+    }
+
+    const authUser = { id: user.id, email: user.email, name: user.name, picture: user.picture, role: user.role };
+    const token = signSessionToken(authUser);
+    res.cookie(env.SESSION_COOKIE_NAME, token, sessionCookieOptions());
+    return res.json({ ok: true, user: authUser });
+  } catch (err) {
+    return next(err);
+  }
+});
+
 export default router;
