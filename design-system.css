@@ -6,7 +6,7 @@
    ============================================================ */
 
 /* ---- Google Fonts ---- */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Michroma&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
 
 
 /* ============================================================
@@ -78,6 +78,52 @@
   --blue-10: #0081f1;
   --blue-11: #006adc;
 
+  /* Blue — missing steps */
+  --blue-1:  #fbfdff;
+  --blue-2:  #f4faff;
+  --blue-6:  #b7d9f8;
+  --blue-7:  #96c7f2;
+  --blue-8:  #5eb0ef;
+  --blue-12: #00254d;
+
+  /* Green — missing steps */
+  --green-1:  #fbfefb;
+  --green-2:  #f3fcf3;
+  --green-6:  #a2d9b1;
+  --green-7:  #83c99a;
+  --green-8:  #5db37e;
+  --green-12: #153226;
+
+  /* Red — missing steps */
+  --red-1:  #fffcfc;
+  --red-2:  #fff8f8;
+  --red-6:  #f9c6c6;
+  --red-7:  #f3aeaf;
+  --red-8:  #eb9091;
+  --red-12: #641723;
+
+  /* Amber — missing steps */
+  --amber-1:  #fefdfb;
+  --amber-2:  #fff9ed;
+  --amber-6:  #ffd386;
+  --amber-7:  #f9ba4c;
+  --amber-8:  #ee9d2b;
+  --amber-12: #4e2009;
+
+  /* Indigo */
+  --indigo-1:  #fdfdfe;
+  --indigo-2:  #f7f9ff;
+  --indigo-3:  #edf2fe;
+  --indigo-4:  #e1e9ff;
+  --indigo-5:  #d2deff;
+  --indigo-6:  #c1d0ff;
+  --indigo-7:  #9eb0fb;
+  --indigo-8:  #7d96f6;
+  --indigo-9:  #3e63dd;
+  --indigo-10: #3358d4;
+  --indigo-11: #3451b2;
+  --indigo-12: #1f2d5c;
+
 
   /* ============================================================
      2. Design Tokens — Superfícies Semânticas
@@ -145,7 +191,8 @@
      3. Design Tokens — Tipografia (Material Design 3)
      ============================================================ */
 
-  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family:   'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display:  'Michroma', 'IBM Plex Sans', sans-serif;
 
   /* Display */
   --type-display-lg-size:     57px;
@@ -367,6 +414,47 @@
   --blue-9:  #0091ff;
   --blue-10: #369eff;
   --blue-11: #52a9ff;
+
+  --blue-1:  #0d1520;
+  --blue-2:  #111927;
+  --blue-6:  #10508f;
+  --blue-7:  #205d9e;
+  --blue-8:  #2870bd;
+  --blue-12: #eaf6ff;
+
+  --green-1:  #0e1512;
+  --green-2:  #121b17;
+  --green-6:  #20573e;
+  --green-7:  #28684a;
+  --green-8:  #2f7c57;
+  --green-12: #e5fbeb;
+
+  --red-1:  #191111;
+  --red-2:  #201314;
+  --red-6:  #72232d;
+  --red-7:  #8c333a;
+  --red-8:  #b54548;
+  --red-12: #ffd1d9;
+
+  --amber-1:  #16120a;
+  --amber-2:  #1d180f;
+  --amber-6:  #433800;
+  --amber-7:  #5c4c02;
+  --amber-8:  #7b6514;
+  --amber-12: #fef3dd;
+
+  --indigo-1:  #11131f;
+  --indigo-2:  #141726;
+  --indigo-3:  #182449;
+  --indigo-4:  #1d2e62;
+  --indigo-5:  #243974;
+  --indigo-6:  #2f4592;
+  --indigo-7:  #3a54af;
+  --indigo-8:  #4567cb;
+  --indigo-9:  #3e63dd;
+  --indigo-10: #5472e4;
+  --indigo-11: #9eb1ff;
+  --indigo-12: #d6e1ff;
 
   /* Superfícies invertidas */
   --surface-app:              var(--gray-1);

@@ -2,3 +2,12 @@
 .claude/
 node_modules/
 *.log
+
+# Backend
+backend/node_modules/
+backend/dist/
+backend/.env
+backend/.env.local
+backend/.env.*.local
+backend/.vercel/
+backend/coverage/

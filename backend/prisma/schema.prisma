@@ -1,0 +1,149 @@
+// PACT — Prisma schema
+// Postgres via Neon (pooled URL para runtime, direct URL para migrations)
+// Documentação: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL") // Neon pooled URL (pgbouncer=true) — usado em runtime
+  directUrl = env("DIRECT_URL")   // Neon direct URL — usado por prisma migrate / db push
+}
+
+// ─────────────────────────────────────────────────────────────
+// USERS — quem usa a plataforma (RH, líderes, viewers)
+// ─────────────────────────────────────────────────────────────
+
+enum UserRole {
+  SUPER_ADMIN // RH / CEO — gerencia plataforma, usuários e avaliações de todos
+  ADMIN       // Liderança da city — avalia técnicos, vê próprias avaliações
+}
+
+model User {
+  id          String    @id @default(uuid()) @db.Uuid
+  email       String    @unique
+  googleId    String    @unique @map("google_id")
+  name        String
+  picture     String?
+  role        UserRole  @default(ADMIN)
+  active      Boolean   @default(true)
+  lastLoginAt DateTime? @map("last_login_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  evaluations Evaluation[] @relation("EvaluatorEvaluations")
+  auditLogs   AuditLog[]
+
+  @@index([email])
+  @@map("users")
+}
+
+// ─────────────────────────────────────────────────────────────
+// TECHNICIANS — quem é avaliado
+// ─────────────────────────────────────────────────────────────
+
+model Technician {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String
+  email     String?  @unique
+  team      String?
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  evaluations Evaluation[]
+
+  @@index([name])
+  @@index([team])
+  @@map("technicians")
+}
+
+// ─────────────────────────────────────────────────────────────
+// EVALUATIONS — avaliação completa
+// ─────────────────────────────────────────────────────────────
+
+enum Classification {
+  OTIMO   // 4.2 – 5.0
+  BOM     // 3.2 – 4.1
+  REGULAR // 2.0 – 3.1
+  CRITICO // 0.0 – 1.9
+}
+
+enum Recommendation {
+  ELEGIVEL_BONUS
+  INDICADO_PROMOCAO
+  PLANO_DESENVOLVIMENTO
+  ATENCAO_URGENTE
+}
+
+model Evaluation {
+  id              String          @id @default(uuid()) @db.Uuid
+  technicianId    String          @map("technician_id") @db.Uuid
+  evaluatorId     String          @map("evaluator_id") @db.Uuid
+  technicalScore  Decimal         @map("technical_score") @db.Decimal(3, 2)
+  behavioralScore Decimal         @map("behavioral_score") @db.Decimal(3, 2)
+  finalScore      Decimal         @map("final_score") @db.Decimal(3, 2)
+  classification  Classification
+  recommendation  Recommendation?
+  observations    String?         @db.Text
+  cycle           String          // ex: "2026-Q2"
+  createdAt       DateTime        @default(now()) @map("created_at")
+  updatedAt       DateTime        @updatedAt @map("updated_at")
+
+  technician Technician        @relation(fields: [technicianId], references: [id], onDelete: Restrict)
+  evaluator  User              @relation("EvaluatorEvaluations", fields: [evaluatorId], references: [id], onDelete: Restrict)
+  scores     EvaluationScore[]
+
+  @@index([technicianId])
+  @@index([evaluatorId])
+  @@index([cycle])
+  @@index([createdAt])
+  @@index([classification])
+  @@map("evaluations")
+}
+
+enum CriterionBlock {
+  TECNICO
+  COMPORTAMENTAL
+}
+
+model EvaluationScore {
+  id           String         @id @default(uuid()) @db.Uuid
+  evaluationId String         @map("evaluation_id") @db.Uuid
+  block        CriterionBlock
+  criterionKey String         @map("criterion_key") // ex: "qualidade_tecnica"
+  score        Int            // 1 a 5
+  weight       Int            // 1, 2 ou 3
+
+  evaluation Evaluation @relation(fields: [evaluationId], references: [id], onDelete: Cascade)
+
+  @@unique([evaluationId, criterionKey])
+  @@index([evaluationId])
+  @@map("evaluation_scores")
+}
+
+// ─────────────────────────────────────────────────────────────
+// AUDIT LOG — rastreabilidade (quem fez o quê)
+// ─────────────────────────────────────────────────────────────
+
+model AuditLog {
+  id         String   @id @default(uuid()) @db.Uuid
+  userId     String?  @map("user_id") @db.Uuid
+  action     String   // ex: "evaluation.created", "user.login"
+  entityType String?  @map("entity_type")
+  entityId   String?  @map("entity_id")
+  metadata   Json?
+  ipAddress  String?  @map("ip_address")
+  userAgent  String?  @map("user_agent")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+  @@index([entityType, entityId])
+  @@map("audit_log")
+}
