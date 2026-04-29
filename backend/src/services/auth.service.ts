@@ -115,7 +115,9 @@ export function sessionCookieOptions(): CookieOptions {
   return {
     httpOnly: true,
     secure: isProduction,
-    sameSite: 'lax',
+    // Cross-origin fetch between frontend/backend on different *.vercel.app domains
+    // requires sameSite:'none' so credentials:'include' works
+    sameSite: isProduction ? 'none' : 'lax',
     maxAge: env.SESSION_MAX_AGE_DAYS * 24 * 60 * 60 * 1000,
     path: '/',
   };
@@ -129,7 +131,7 @@ export function oauthStateCookieOptions(): CookieOptions {
   return {
     httpOnly: true,
     secure: isProduction,
-    sameSite: 'lax',
+    sameSite: isProduction ? 'none' : 'lax',
     maxAge: 10 * 60 * 1000,
     path: '/',
   };

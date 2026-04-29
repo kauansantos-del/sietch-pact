@@ -9,3 +9,5 @@ dist/
 coverage/
 .vitest/
 prisma/migrations/dev.db*
+
+.vercel

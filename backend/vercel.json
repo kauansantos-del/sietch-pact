@@ -1,15 +1,16 @@
 {
   "version": 2,
-  "buildCommand": "npx prisma generate && tsc",
   "installCommand": "npm install",
+  "buildCommand": "npx prisma generate",
+  "outputDirectory": "public",
   "framework": null,
+  "alias": ["sietch-pact-api.vercel.app"],
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/index" }
   ],
   "functions": {
     "api/index.ts": {
-      "maxDuration": 10,
-      "memory": 1024
+      "maxDuration": 10
     }
   }
 }
